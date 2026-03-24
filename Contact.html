@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact Us – The Coding Expert | Ballabgarh, Faridabad</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Nunito:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/mediaQ.css" />
+    <link rel="stylesheet" href="css/buttonDesgin.css" />
+    <style>
+        #scroll-prog {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--orange), #f97316cc);
+            z-index: 9999;
+            width: 0%;
+        }
+
+        #backTop {
+            position: fixed;
+            bottom: 28px;
+            left: 28px;
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            background: var(--navy);
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 20px rgba(30, 58, 138, .35);
+            opacity: 0;
+            visibility: hidden;
+            transition: all .3s;
+            z-index: 500;
+        }
+
+        #backTop.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        #backTop:hover {
+            background: var(--orange);
+            transform: translateY(-3px);
+        }
+
+        /* Quick strip */
+        .quick-strip {
+            background: var(--navy);
+            padding: 0 5%;
+            position: relative;
+            z-index: 3;
+        }
+
+        .quick-strip-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            align-items: stretch;
+            border-radius: 18px;
+            overflow: hidden;
+            margin-top: -55px;
+            box-shadow: 0 20px 60px rgba(30, 58, 138, .25);
+            background: white;
+        }
+
+        .qs-item {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 24px 22px;
+            border-right: 1px solid rgba(30, 58, 138, .08);
+            transition: background .2s;
+            cursor: pointer;
+        }
+
+        .qs-item:last-child {
+            border-right: none;
+        }
+
+        .qs-item:hover {
+            background: var(--navy-soft);
+        }
+
+        .qs-icon {
+            font-size: 26px;
+        }
+
+        .qs-label {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 12px;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: .5px;
+        }
+
+        .qs-value {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 14px;
+            color: var(--dark);
+            margin-top: 2px;
+        }
+
+        @media(max-width:768px) {
+            .quick-strip-inner {
+                flex-direction: column;
+                margin-top: -30px;
+                border-radius: 12px;
+            }
+
+            .qs-item {
+                border-right: none;
+                border-bottom: 1px solid rgba(30, 58, 138, .08);
+            }
+        }
+
+        /* Contact layout */
+        .contact-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: start;
+        }
+
+        .contact-details {
+            margin-top: 28px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+        }
+
+        .contact-icon {
+            width: 46px;
+            height: 46px;
+            border-radius: 12px;
+            background: var(--navy-soft);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            flex-shrink: 0;
+            transition: background .2s;
+        }
+
+        .contact-item:hover .contact-icon {
+            background: var(--navy);
+        }
+
+        .contact-item-text strong {
+            display: block;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 14px;
+            color: var(--dark);
+            margin-bottom: 3px;
+        }
+
+        .contact-item-text span {
+            font-size: 14px;
+            color: var(--muted);
+            line-height: 1.6;
+        }
+
+        /* FAQ */
+        .faq-section {
+            padding: 80px 5%;
+            background: var(--light);
+        }
+
+        .faq-list {
+            max-width: 800px;
+            margin: 40px auto 0;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .faq-item {
+            background: #fff;
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 2px 12px rgba(30, 58, 138, .07);
+            border: 1px solid rgba(30, 58, 138, .07);
+        }
+
+        .faq-q {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 24px;
+            cursor: pointer;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 16px;
+            color: var(--dark);
+            transition: background .2s;
+        }
+
+        .faq-q:hover {
+            background: var(--navy-soft);
+        }
+
+        .faq-q.open {
+            background: var(--navy-soft);
+            color: var(--navy);
+        }
+
+        .faq-arrow {
+            font-size: 22px;
+            transition: transform .3s;
+            color: var(--orange);
+            font-weight: 300;
+        }
+
+        .faq-q.open .faq-arrow {
+            transform: rotate(45deg);
+        }
+
+        .faq-a {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height .4s ease, padding .3s;
+            font-size: 15px;
+            color: var(--muted);
+            line-height: 1.8;
+        }
+
+        .faq-a.open {
+            max-height: 200px;
+            padding: 0 24px 20px;
+        }
+
+        /* Map */
+        .map-section {
+            padding: 0 5% 80px;
+        }
+
+        .map-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 12px 48px rgba(30, 58, 138, .15);
+        }
+
+        .map-inner iframe {
+            width: 100%;
+            height: 420px;
+            border: none;
+            display: block;
+        }
+
+        .btn-submit-form {
+            background: var(--navy);
+            border-radius: 4px;
+        }
+
+        /* Social CTA cards */
+        .social-cta-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            max-width: 1100px;
+            margin: 0 auto 60px;
+        }
+
+        .soc-card {
+            background: white;
+            border-radius: 16px;
+            padding: 28px 20px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(30, 58, 138, .08);
+            border: 1px solid rgba(30, 58, 138, .06);
+            transition: transform .3s, box-shadow .3s;
+        }
+
+        .soc-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(30, 58, 138, .15);
+        }
+
+        .soc-card-icon {
+            font-size: 36px;
+            margin-bottom: 12px;
+        }
+
+        .soc-card h4 {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 800;
+            font-size: 16px;
+            color: var(--dark);
+            margin-bottom: 6px;
+        }
+
+        .soc-card p {
+            font-size: 13px;
+            color: var(--muted);
+            margin-bottom: 14px;
+        }
+
+        .soc-btn {
+            display: inline-block;
+            padding: 9px 20px;
+            border-radius: 50px;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 13px;
+            background: var(--navy);
+            color: #fff;
+            transition: background .2s;
+        }
+
+        .soc-btn:hover {
+            background: var(--orange);
+        }
+
+        @media(max-width:768px) {
+            .contact-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .social-cta-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media(max-width:480px) {
+            .social-cta-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="scroll-prog"></div>
+
+    <!-- NAVBAR -->
+    <div class="navbar-wrap">
+        <div class="nav-top">
+            <div class="nav-top-left">🏆 <span>Ballabgarh's #1 Coding Institute</span> &nbsp;·&nbsp; Sector-3,
+                Ballabgarh, Faridabad</div>
+            <div class="nav-top-right">
+                <a href="tel:+918595210430" class="nav-top-link"><span class="nt-icon">📞</span> +91 8595210430</a>
+                <div class="nav-top-divider"></div>
+                <a href="mailto:thecodingexpert8@gmail.com" class="nav-top-link"><span class="nt-icon">✉️</span>
+                    thecodingexpert8@gmail.com</a>
+                <div class="nav-top-divider"></div>
+                <a href="https://wa.me/918595210430" target="_blank" class="nav-top-link"><span
+                        class="nt-icon">💬</span> WhatsApp</a>
+            </div>
+        </div>
+        <nav>
+            <a href="index.html" class="nav-logo"><img src="./image/Coding expert png.png"
+                    alt="The Coding Expert" /></a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="coures.html">Courses</a></li>
+                <li><a href="Faculties.html">Faculties</a></li>
+                <li><a href="Testimonials.html">Testimonials</a></li>
+                <li><a href="blog.html">Blog</a></li>
+                <li><a href="Contact.html" class="active">Contact</a></li>
+            </ul>
+            <a href="Appointment.html" class="nav-btn">📅 Book Appointment</a>
+            <button class="hamburger" id="hbg"><span></span><span></span><span></span></button>
+        </nav>
+    </div>
+    <div class="mobile-menu" id="mobMenu">
+        <a href="index.html">Home</a><a href="about.html">About</a><a href="coures.html">Courses</a>
+        <a href="Faculties.html">Faculties</a><a href="Testimonials.html">Testimonials</a>
+        <a href="blog.html">Blog</a><a href="Contact.html">Contact</a>
+        <a href="Appointment.html" class="mob-cta">📅 Book Appointment</a>
+    </div>
+
+    <!-- PAGE HERO -->
+    <div class="page-hero">
+        <div class="max-w">
+            <div class="breadcrumb"><a href="index.html">Home</a> › <span>Contact Us</span></div>
+            <h1>Get In <span>Touch</span></h1>
+            <p>Reach out to us for course enquiries, admissions, or to book your free demo class today.</p>
+        </div>
+        <div class="page-hero-wave">
+            <svg viewBox="0 0 1440 70" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"
+                style="width:100%;display:block;">
+                <path d="M0,35 C360,75 1080,-5 1440,35 L1440,70 L0,70 Z" fill="white" />
+            </svg>
+        </div>
+    </div>
+
+    <!-- QUICK STRIP -->
+    <div class="quick-strip">
+        <div class="quick-strip-inner">
+            <div class="qs-item"
+                onclick="window.open('https://maps.google.com?q=Sector+3+Ballabgarh+Faridabad','_blank')">
+                <div class="qs-icon">📍</div>
+                <div>
+                    <div class="qs-label">Our Location</div>
+                    <div class="qs-value">Shop No. 2066 A, Ground Floor, Gyan Shala Institute, near Tagore Academy
+                        Public School, Sector-3, Ballabhgarh, Faridabad, 121004.
+                    </div>
+                </div>
+            </div>
+            <div class="qs-item" onclick="window.location='tel:+918595210430'">
+                <div class="qs-icon">📞</div>
+                <div>
+                    <div class="qs-label">Call Us</div>
+                    <div class="qs-value">+91 8595210430</div>
+                </div>
+            </div>
+            <div class="qs-item" onclick="window.location='mailto:clearninginstitute@gmail.com'">
+                <div class="qs-icon">✉️</div>
+                <div>
+                    <div class="qs-label">Email Us</div>
+                    <div class="qs-value">clearninginstitute@gmail.com</div>
+                </div>
+            </div>
+            <div class="qs-item">
+                <div class="qs-icon">🕐</div>
+                <div>
+                    <div class="qs-label">Open Hours</div>
+                    <div class="qs-value">Mon–Sat: 10am – 8:30pm</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CONTACT FORM + INFO -->
+    <section class="contact" style="padding:80px 5%;">
+        <div class="max-w">
+            <div class="contact-layout">
+                <div class="contact-info" data-aos="fade-right">
+                    <div class="sec-label">Contact Details</div>
+                    <h2>Connect With <em>The Coding Expert!</em></h2>
+                    <p>Our team is ready to help you choose the right course and enroll. You can visit us, call us, or
+                        send a message — we respond quickly!</p>
+                    <div class="contact-details">
+                        <div class="contact-item">
+                            <div class="contact-icon">📍</div>
+                            <div class="contact-item-text"><strong>Our Location</strong><span>Shop No. 2066 A, Ground
+                                    Floor, Gyan Shala Institute, near Tagore Academy Public School, Sector-3,
+                                    Ballabhgarh, Faridabad, 121004.
+                                </span></div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">📞</div>
+                            <div class="contact-item-text"><strong>Phone Numbers</strong><span><a
+                                        href="tel:+918595210430" style="color:var(--navy);font-weight:600;">+91
+                                        8595210430</a> &nbsp;|&nbsp; <a href="tel:+918287873915"
+                                        style="color:var(--navy);font-weight:600;">+91 8287873915</a></span></div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">✉️</div>
+                            <div class="contact-item-text"><strong>Email Address</strong><span><a
+                                        href="mailto:clearninginstitute@gmail.com"
+                                        style="color:var(--navy);font-weight:600;">clearninginstitute@gmail.com</a></span>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">🕐</div>
+                            <div class="contact-item-text"><strong>Open Hours</strong><span>Monday – Saturday: 10:00 AM
+                                    – 8:30 PM</span></div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">💬</div>
+                            <div class="contact-item-text"><strong>WhatsApp</strong><span><a
+                                        href="https://wa.me/918595210430" target="_blank"
+                                        style="color:var(--navy);font-weight:600;">Chat with us on WhatsApp →</a></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-form" data-aos="fade-left">
+                    <div class="form-title">Send Us a Message</div>
+                    <div class="form-row">
+                        <div class="form-group"><label>Full Name *</label><input type="text" id="ctName"
+                                placeholder="Your full name" /></div>
+                        <div class="form-group"><label>Phone Number *</label><input type="tel" id="ctPhone"
+                                placeholder="+91 XXXXX XXXXX" /></div>
+                    </div>
+                    <div class="form-group"><label>Email Address</label><input type="email" id="ctEmail"
+                            placeholder="your@email.com" /></div>
+                    <div class="form-group">
+                        <label>Select Course</label>
+                        <select id="ctCourse">
+                            <option value="">-- Choose a Course --</option>
+                            <option>Web Designing Course</option>
+                            <option>Core JavaScript</option>
+                            <option>WordPress</option>
+                            <option>C Language Course</option>
+                            <option>C++ Programming</option>
+                            <option>Python Programming</option>
+                            <option>Advanced Excel</option>
+                            <option>MS Office Complete</option>
+                            <option>Basic Computer</option>
+                            <option>ADCA Diploma</option>
+                            <option>Digital Marketing</option>
+                            <option>Social Media Marketing</option>
+                            <option>Canva Design</option>
+                        </select>
+                    </div>
+                    <div class="form-group"><label>Your Message</label><textarea id="ctMsg"
+                            placeholder="Tell us about your query — course info, timing, fees, admissions..."></textarea>
+                    </div>
+                    <button class="btn-submit-form main-btn" id="ctSubmit" onclick="submitContact()">Send Message
+                        →</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SOCIAL CTA CARDS -->
+    <section style="background:var(--light);padding:60px 5% 0;">
+        <div class="max-w">
+            <div class="sec-head center" data-aos="fade-up">
+                <div class="sec-label">Find Us Everywhere</div>
+                <h2 class="sec-title">Connect On <em>Social Media</em></h2>
+            </div>
+            <div class="social-cta-grid" style="margin-top:40px;">
+                <div class="soc-card" data-aos="fade-up" data-aos-delay="0">
+                    <div class="soc-card-icon">▶</div>
+                    <h4>YouTube</h4>
+                    <p>Watch free tutorials and course previews</p><a
+                        href="https://www.youtube.com/channel/UCrwd04lAF_SWs9wcfB3vgEg" target="_blank"
+                        class="soc-btn">Subscribe →</a>
+                </div>
+                <div class="soc-card" data-aos="fade-up" data-aos-delay="80">
+                    <div class="soc-card-icon">📷</div>
+                    <h4>Instagram</h4>
+                    <p>Follow for updates, tips & student highlights</p><a
+                        href="https://instagram.com/thecodingexpertacademy" target="_blank" class="soc-btn">Follow →</a>
+                </div>
+                <div class="soc-card" data-aos="fade-up" data-aos-delay="160">
+                    <div class="soc-card-icon">f</div>
+                    <h4>Facebook</h4>
+                    <p>Join our community & get course updates</p><a
+                        href="https://www.facebook.com/profile.php?id=100087768400885" target="_blank"
+                        class="soc-btn">Like Page →</a>
+                </div>
+                <div class="soc-card" data-aos="fade-up" data-aos-delay="240">
+                    <div class="soc-card-icon">💬</div>
+                    <h4>WhatsApp</h4>
+                    <p>Chat directly with us for quick enquiries</p><a href="https://wa.me/918595210430" target="_blank"
+                        class="soc-btn">Chat Now →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MAP -->
+    <section class="map-section" style="padding-top:60px;">
+        <div class="max-w">
+            <div class="sec-head center" data-aos="fade-up">
+                <div class="sec-label">Find Us</div>
+                <h2 class="sec-title">Visit <em>Our Institute</em></h2>
+                <p class="sec-sub">Shop No. 2278, Sector-3, Near Tagore Academy School, Ballabgarh, Faridabad</p>
+            </div>
+        </div>
+        <div class="map-inner" data-aos="fade-up"
+            style="max-width:1100px;margin:36px auto 0;border-radius:20px;overflow:hidden;box-shadow:0 12px 48px rgba(30,58,138,.15);">
+            <iframe
+                src="https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d198.59993451168708!2d77.33475887809563!3d28.347929164552276!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1sShop%20No.%202066%20A%2C%20Ground%20Floor%2C%20Gyan%20Shala%20Institute%2C%20near%20Tagore%20Academy%20Public%20School%2C%20Sector-3%2C%20Ballabhgarh%2C%20Faridabad%2C%20121004.!5e1!3m2!1sen!2sin!4v1773940028446!5m2!1sen!2sin"
+                width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq-section">
+        <div class="max-w">
+            <div class="sec-head center" data-aos="fade-up">
+                <div class="sec-label">FAQ</div>
+                <h2 class="sec-title">Frequently Asked <em>Questions</em></h2>
+            </div>
+            <div class="faq-list" data-aos="fade-up">
+                <div class="faq-item">
+                    <div class="faq-q" onclick="toggleFaq(this)">Do you offer online classes? <span
+                            class="faq-arrow">+</span></div>
+                    <div class="faq-a">Yes! We offer both online and offline classes. You can attend live sessions from
+                        the comfort of your home or visit our institute. Recorded sessions are also provided for all
+                        courses.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-q" onclick="toggleFaq(this)">Is there a free demo class? <span
+                            class="faq-arrow">+</span></div>
+                    <div class="faq-a">Yes! We provide 3 free demo classes for all our courses. You can attend before
+                        deciding to enroll — no payment required and no commitment.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-q" onclick="toggleFaq(this)">What certificate will I receive? <span
+                            class="faq-arrow">+</span></div>
+                    <div class="faq-a">Upon successful completion of a course, you receive a certificate from The Coding
+                        Expert. This certificate can be shared on your resume and LinkedIn profile to demonstrate your
+                        skills.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-q" onclick="toggleFaq(this)">Do you provide placement support? <span
+                            class="faq-arrow">+</span></div>
+                    <div class="faq-a">Yes, we provide 100% placement support! We help students prepare for job
+                        interviews, build their portfolios with live projects, and connect them with relevant
+                        opportunities in IT.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-q" onclick="toggleFaq(this)">What are the course fees? <span
+                            class="faq-arrow">+</span></div>
+                    <div class="faq-a">Our course fees are very affordable and vary by course. Please call us on +91
+                        8595210430 or visit the institute for the latest fee details. We also offer flexible payment
+                        options.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-q" onclick="toggleFaq(this)">Can I join mid-month or start anytime? <span
+                            class="faq-arrow">+</span></div>
+                    <div class="faq-a">Yes! We have morning, afternoon, and evening batches so you can find a slot that
+                        works for you. New batches start regularly and you can join at any convenient time.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA BAND -->
+    <div class="cta-band" data-aos="fade-up">
+        <h2>Still Have <span>Questions?</span></h2>
+        <p>Call us or visit us at the institute — we're happy to guide you to the right course.</p>
+        <div class="cta-btns">
+            <a href="tel:+918595210430" class="btn-pill">📞 Call Now →</a>
+            <a href="https://wa.me/918595210430" target="_blank" class="btn-pill-outline">💬 WhatsApp Us →</a>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="max-w">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="footer-logo">
+                        <img height="300px" src="./image/Coding expert png.png" alt="The Coding Expert" />
+                    </div>
+                    <p>Premier IT training institute in Ballabgarh offering best quality education at affordable fees.
+                    </p>
+                    <div class="social-links">
+                        <a href="https://www.youtube.com/channel/UCrwd04lAF_SWs9wcfB3vgEg" target="_blank"
+                            class="social-btn">▶</a>
+                        <a href="https://www.instagram.com/invites/contact/?i=1ub4yoodnzixy" target="_blank"
+                            class="social-btn">📷</a>
+                        <a href="https://www.facebook.com/profile.php?id=100087768400885" target="_blank"
+                            class="social-btn">f</a>
+                        <a href="https://wa.me/918595210430" target="_blank" class="social-btn">💬</a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="coures.html">Courses</a></li>
+                        <li><a href="Faculties.html">Faculties</a></li>
+                        <li><a href="Testimonials.html">Testimonials</a></li>
+                        <li><a href="blog.html">Blog</a></li>
+                        <li><a href="Contact.html">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Our Courses</h4>
+                    <ul class="footer-links">
+                        <li><a href="coures.html">Web Designing</a></li>
+                        <li><a href="coures.html">C / C++ Language</a></li>
+                        <li><a href="coures.html">Python</a></li>
+                        <li><a href="coures.html">Advanced Excel</a></li>
+                        <li><a href="coures.html">MS Office Complete</a></li>
+                        <li><a href="coures.html">Digital Marketing</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact Details</h4>
+                    <div class="footer-contact-list">
+                        <div class="footer-contact-item"><span class="fci">📍</span><span class="fct">Shop No. 2066 A,
+                                Ground Floor, Gyan Shala Institute, near Tagore Academy Public School, Sector-3,
+                                Ballabhgarh, Faridabad, 121004.
+                            </span></div>
+                        <div class="footer-contact-item"><span class="fci">📞</span><span class="fct">+91
+                                8287873915<br>+91 8595210430</span></div>
+                        <div class="footer-contact-item"><span class="fci">✉️</span><span
+                                class="fct">clearninginstitute@gmail.com</span></div>
+                        <div class="footer-contact-item"><span class="fci">🕐</span><span class="fct">Mon – Sat: 10am –
+                                8:30pm</span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2025 The Coding Expert – All rights reserved.</p>
+                <p>Designed with ❤️ for students of Ballabgarh</p>
+            </div>
+        </div>
+    </footer>
+
+    <a href="https://wa.me/918595210430" target="_blank" class="wa-fab">💬</a>
+    <button id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        document.addEventListener('contextmenu', function (e) { e.preventDefault() });
+        document.addEventListener('keydown', function (e) { if (e.ctrlKey && ['u', 'U', 's', 'S'].includes(e.key)) e.preventDefault(); if (e.key === 'F12') e.preventDefault(); if (e.ctrlKey && e.shiftKey && ['I', 'i', 'J', 'j', 'C', 'c'].includes(e.key)) e.preventDefault(); });
+        document.addEventListener('selectstart', function (e) { if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') e.preventDefault(); });
+
+        window.addEventListener('scroll', function () { var s = window.scrollY, h = document.body.scrollHeight - window.innerHeight; document.getElementById('scroll-prog').style.width = (s / h * 100) + '%'; document.getElementById('backTop').classList.toggle('show', s > 400); document.querySelector('.navbar-wrap').classList.toggle('scrolled', s > 60); });
+        document.getElementById('hbg').addEventListener('click', function () { document.getElementById('mobMenu').classList.toggle('open'); });
+
+        AOS.init({ once: true, duration: 700, easing: 'ease-out-cubic', offset: 60 });
+
+        function toggleFaq(el) {
+            var answer = el.nextElementSibling;
+            var isOpen = el.classList.contains('open');
+            document.querySelectorAll('.faq-q').forEach(function (q) { q.classList.remove('open'); q.nextElementSibling.classList.remove('open'); });
+            if (!isOpen) { el.classList.add('open'); answer.classList.add('open'); }
+        }
+
+        function submitContact() {
+            var n = document.getElementById('ctName').value;
+            var p = document.getElementById('ctPhone').value;
+            if (!n.trim() || !p.trim()) { alert('Please fill in your name and phone number.'); return; }
+            var btn = document.getElementById('ctSubmit');
+            btn.innerHTML = '✓ Message Sent! We\'ll contact you soon.';
+            btn.style.background = '#16a34a';
+            btn.disabled = true;
+        }
+
+        var p = document.createElement('div'); 
+        document.addEventListener('mousemove', function (e) {
+            if (window.innerWidth > 1000) {
+                p.className = 'partical'; p.style.left = e.clientX + 'px'; p.style.top = e.clientY + 'px'; document.body.appendChild(p); setTimeout(function () { p.remove(); }, 1000);
+            }
+        });
+    </script>
+</body>
+
+</html>

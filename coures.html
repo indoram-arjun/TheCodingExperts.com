@@ -1,0 +1,989 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Courses – The Coding Expert | Ballabgarh, Faridabad</title>
+    <meta name="description"
+        content="Explore 20+ professional courses at The Coding Expert — Web Designing, Python, C/C++, Digital Marketing, Advanced Excel & more. Online & offline batches in Ballabgarh.">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Nunito:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/mediaQ.css" />
+    <style>
+        #scroll-prog {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--orange), #f97316cc);
+            z-index: 9999;
+            width: 0%;
+        }
+
+        #backTop {
+            position: fixed;
+            bottom: 28px;
+            left: 28px;
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            background: var(--navy);
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 20px rgba(30, 58, 138, .35);
+            opacity: 0;
+            visibility: hidden;
+            transition: all .3s;
+            z-index: 500;
+        }
+
+        #backTop.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        #backTop:hover {
+            background: var(--orange);
+            transform: translateY(-3px);
+        }
+
+        /* ── FEATURED SWIPER ── */
+        .featured-section {
+            background: linear-gradient(135deg, #0a1628, #1E3A8A);
+            padding: 60px 5%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .featured-section::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse at 70% 50%, rgba(249, 115, 22, .15), transparent 60%);
+        }
+
+        .featured-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .featured-inner .sec-label {
+            background: rgba(249, 115, 22, .2);
+            color: var(--orange);
+        }
+
+        .featured-inner .sec-title {
+            color: #fff;
+        }
+
+        .swiper-featured {
+            margin-top: 36px;
+            padding-bottom: 50px;
+        }
+
+        .swiper-featured .swiper-slide {
+            border-radius: 20px;
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .swiper-featured .swiper-slide img {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            display: block;
+            transition: transform .5s;
+        }
+
+        .swiper-featured .swiper-slide:hover img {
+            transform: scale(1.06);
+        }
+
+        .feat-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(10, 22, 40, .95) 0%, transparent 60%);
+            padding: 30px 24px 22px;
+        }
+
+        .feat-tag {
+            display: inline-block;
+            background: var(--orange);
+            color: #fff;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 11px;
+            padding: 3px 12px;
+            border-radius: 20px;
+            margin-bottom: 8px;
+        }
+
+        .feat-title {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 800;
+            font-size: 18px;
+            color: #fff;
+            margin-bottom: 4px;
+        }
+
+        .feat-meta {
+            font-size: 12px;
+            color: rgba(255, 255, 255, .65);
+        }
+
+        .feat-enroll {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 8px 18px;
+            background: var(--orange);
+            color: #fff;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 12px;
+            border-radius: 50px;
+            transition: all .2s;
+        }
+
+        .feat-enroll:hover {
+            background: #ea6005;
+        }
+
+        /* ── SEARCH BAR ── */
+        .search-wrap {
+            max-width: 560px;
+            margin: 0 auto 40px;
+            position: relative;
+        }
+
+        .search-wrap input {
+            width: 100%;
+            padding: 16px 52px 16px 22px;
+            border-radius: 50px;
+            border: 2px solid var(--navy-bg);
+            font-family: 'Nunito', sans-serif;
+            font-size: 15px;
+            color: var(--dark);
+            outline: none;
+            transition: border-color .2s;
+            box-shadow: 0 4px 20px rgba(30, 58, 138, .07);
+        }
+
+        .search-wrap input:focus {
+            border-color: var(--navy);
+        }
+
+        .search-wrap::after {
+            content: '🔍';
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 18px;
+            pointer-events: none;
+        }
+
+        /* ── FILTER TABS ── */
+        .filter-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 44px;
+        }
+
+        .filter-tab {
+            padding: 9px 22px;
+            border-radius: 50px;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 13px;
+            border: 2px solid var(--navy-bg);
+            cursor: pointer;
+            transition: all .2s;
+            background: white;
+            color: var(--muted);
+        }
+
+        .filter-tab.active,
+        .filter-tab:hover {
+            background: var(--navy);
+            color: white;
+            border-color: var(--navy);
+        }
+
+        /* ── COURSE CARDS ── */
+        .all-courses-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .course-detail {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid rgba(30, 58, 138, .08);
+            transition: all .3s;
+            box-shadow: 0 4px 20px rgba(30, 58, 138, .07);
+        }
+
+        .course-detail:hover {
+            transform: translateY(-7px);
+            box-shadow: 0 22px 55px rgba(30, 58, 138, .16);
+            border-color: var(--navy);
+        }
+
+        .course-detail.hidden {
+            display: none;
+        }
+
+        .cd-img {
+            height: 190px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .cd-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform .4s;
+        }
+
+        .course-detail:hover .cd-img img {
+            transform: scale(1.05);
+        }
+
+        .cd-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(30, 58, 138, .3) 0%, transparent 50%);
+        }
+
+        .cd-badge {
+            position: absolute;
+            top: 14px;
+            right: 14px;
+            background: var(--orange);
+            color: #fff;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 800;
+            font-size: 11px;
+            padding: 4px 12px;
+            border-radius: 50px;
+        }
+
+        .cd-body {
+            padding: 22px;
+        }
+
+        .cd-tag {
+            display: inline-block;
+            background: var(--navy-soft);
+            color: var(--navy);
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 11px;
+            padding: 3px 12px;
+            border-radius: 50px;
+            margin-bottom: 10px;
+        }
+
+        .cd-body h3 {
+            font-size: 17px;
+            font-weight: 800;
+            color: var(--dark);
+            margin-bottom: 8px;
+        }
+
+        .cd-body p {
+            font-size: 13.5px;
+            color: var(--muted);
+            line-height: 1.7;
+            margin-bottom: 12px;
+        }
+
+        .cd-meta {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            font-size: 12px;
+            color: var(--muted);
+            margin-bottom: 14px;
+            font-weight: 600;
+        }
+
+        .cd-feats {
+            list-style: none;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5px 10px;
+            margin-bottom: 18px;
+        }
+
+        .cd-feats li {
+            font-size: 12.5px;
+            color: var(--muted);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .cd-feats li::before {
+            content: '✓';
+            color: var(--orange);
+            font-size: 11px;
+            font-weight: 900;
+        }
+
+        .cd-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--muted);
+            font-size: 16px;
+            display: none;
+        }
+
+        @media(max-width:900px) {
+            .all-courses-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media(max-width:600px) {
+            .all-courses-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="scroll-prog"></div>
+
+    <!-- NAVBAR -->
+    <div class="navbar-wrap">
+        <div class="nav-top">
+            <div class="nav-top-left">🏆 <span>Ballabgarh's #1 Coding Institute</span> &nbsp;·&nbsp; Sector-3,
+                Ballabgarh, Faridabad</div>
+            <div class="nav-top-right">
+                <a href="tel:+918595210430" class="nav-top-link"><span class="nt-icon">📞</span> +91 8595210430</a>
+                <div class="nav-top-divider"></div>
+                <a href="mailto:clearninginstitute@gmail.com" class="nav-top-link"><span class="nt-icon">✉️</span>
+                   clearninginstitute@gmail.com</a>
+                <div class="nav-top-divider"></div>
+                <a href="https://wa.me/918595210430" target="_blank" class="nav-top-link"><span
+                        class="nt-icon">💬</span> WhatsApp</a>
+            </div>
+        </div>
+        <nav>
+            <a href="index.html" class="nav-logo"><img src="./image/Coding expert png.png"
+                    alt="The Coding Expert" /></a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="coures.html" class="active">Courses</a></li>
+                <li><a href="Faculties.html">Faculties</a></li>
+                <li><a href="Testimonials.html">Testimonials</a></li>
+                <li><a href="blog.html">Blog</a></li>
+                <li><a href="Contact.html">Contact</a></li>
+            </ul>
+            <a href="Appointment.html" class="nav-btn">📅 Book Appointment</a>
+            <button class="hamburger" id="hbg"><span></span><span></span><span></span></button>
+        </nav>
+    </div>
+    <div class="mobile-menu" id="mobMenu">
+        <a href="index.html">Home</a><a href="about.html">About</a><a href="coures.html">Courses</a>
+        <a href="Faculties.html">Faculties</a><a href="Testimonials.html">Testimonials</a>
+        <a href="blog.html">Blog</a><a href="Contact.html">Contact</a>
+        <a href="Appointment.html" class="mob-cta">📅 Book Appointment</a>
+    </div>
+
+    <!-- PAGE HERO -->
+    <div class="page-hero">
+        <div class="max-w">
+            <div class="breadcrumb"><a href="index.html">Home</a> › <span>Courses</span></div>
+            <h1>Our <span>Courses</span></h1>
+            <p>Industry-aligned courses taught by experienced professionals. Choose your learning path and start
+                building your future today.</p>
+        </div>
+        <div class="page-hero-wave">
+            <svg viewBox="0 0 1440 80" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"
+                style="width:100%;display:block;">
+                <path d="M0,40 C360,90 1080,-10 1440,40 L1440,80 L0,80 Z" fill="var(--light)" />
+            </svg>
+        </div>
+    </div>
+
+    <!-- FEATURED SWIPER -->
+    <section class="featured-section">
+        <div class="featured-inner">
+            <div class="sec-head center" data-aos="fade-up">
+                <div class="sec-label">Featured</div>
+                <h2 class="sec-title">Our Most Popular <em>Courses</em></h2>
+            </div>
+            <div class="swiper swiper-featured" data-aos="fade-up">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <img src="https://images.unsplash.com/photo-1678690832311-bb6e361989ca?q=80&w=1224&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                            alt="Web Designing" />
+                        <div class="feat-overlay"><span class="feat-tag">Most Popular</span>
+                            <div class="feat-title">Web Designing Course</div>
+                            <div class="feat-meta">⏱ 3–4 Months &nbsp;·&nbsp; 🎓 Certificate &nbsp;·&nbsp; Online +
+                                Offline</div><a href="Contact.html" class="feat-enroll">Enroll Now →</a>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?w=700&q=80"
+                            alt="Python" />
+                        <div class="feat-overlay"><span class="feat-tag">Hot 🔥</span>
+                            <div class="feat-title">Python Programming</div>
+                            <div class="feat-meta">⏱ 3 Months &nbsp;·&nbsp; 🎓 Certificate &nbsp;·&nbsp; Online +
+                                Offline</div><a href="Contact.html" class="feat-enroll">Enroll Now →</a>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=700&q=80"
+                            alt="Digital Marketing" />
+                        <div class="feat-overlay"><span class="feat-tag">Hot 🔥</span>
+                            <div class="feat-title">Digital Marketing</div>
+                            <div class="feat-meta">⏱ 2–3 Months &nbsp;·&nbsp; 🎓 Certificate &nbsp;·&nbsp; Online +
+                                Offline</div><a href="Contact.html" class="feat-enroll">Enroll Now →</a>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=700&q=80"
+                            alt="Advanced Excel" />
+                        <div class="feat-overlay"><span class="feat-tag">In-Demand</span>
+                            <div class="feat-title">Advanced Excel</div>
+                            <div class="feat-meta">⏱ 1–2 Months &nbsp;·&nbsp; 🎓 Certificate &nbsp;·&nbsp; Online +
+                                Offline</div><a href="Contact.html" class="feat-enroll">Enroll Now →</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-pagination"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ALL COURSES -->
+    <section style="background:var(--light);padding:80px 5%;">
+        <div class="max-w">
+            <div class="sec-head center" data-aos="fade-up">
+                <div class="sec-label">All Courses</div>
+                <h2 class="sec-title">Explore All <em>Learning Paths</em></h2>
+                <p class="sec-sub">From basic computer skills to advanced programming — we have a course for every
+                    career goal.</p>
+            </div>
+
+            <!-- Search -->
+            <div class="search-wrap" data-aos="fade-up">
+                <input type="text" id="courseSearch" placeholder="Search courses — Python, Excel, Web Design..."
+                    oninput="searchCourses()" />
+            </div>
+
+            <!-- Filter Tabs -->
+            <div class="filter-tabs" data-aos="fade-up">
+                <button class="filter-tab active" onclick="filterCourses('all',this)">All Courses</button>
+                <button class="filter-tab" onclick="filterCourses('programming',this)">⌨️ Programming</button>
+                <button class="filter-tab" onclick="filterCourses('design',this)">🌐 Web Design</button>
+                <button class="filter-tab" onclick="filterCourses('office',this)">📊 Office & Excel</button>
+                <button class="filter-tab" onclick="filterCourses('basics',this)">🖥️ Basics</button>
+                <button class="filter-tab" onclick="filterCourses('marketing',this)">📱 Digital Marketing</button>
+            </div>
+
+            <div class="all-courses-grid" id="coursesGrid">
+
+                <div class="course-detail" data-cat="design" data-name="web designing html css javascript"
+                    data-aos="fade-up">
+                    <div class="cd-img"><img
+                            src="https://images.unsplash.com/photo-1678690832311-bb6e361989ca?q=80&w=1224&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                            alt="Web Designing" />
+                        <div class="cd-overlay"></div>
+                        <div class="cd-badge">Most Popular</div>
+                    </div>
+                    <div class="cd-body"><span class="cd-tag">Design</span>
+                        <h3>Web Designing Course</h3>
+                        <p>Learn front-end development from scratch. Build beautiful, responsive websites with HTML, CSS
+                            &amp; JavaScript.</p>
+                        <div class="cd-meta"><span>⏱ 3–4 Months</span><span>🎓 Certificate</span><span>💻
+                                Online+Offline</span></div>
+                        <ul class="cd-feats">
+                            <li>HTML5 &amp; CSS3</li>
+                            <li>JavaScript &amp; jQuery</li>
+                            <li>Bootstrap / SASS</li>
+                            <li>Responsive Design</li>
+                            <li>Figma Basics</li>
+                            <li>React Intro</li>
+                        </ul>
+                        <div class="cd-actions"><a href="Contact.html" class="btn-sm">Enroll Now →</a><a
+                                href="Appointment.html" class="btn-sm" style="background:var(--orange);">Free Demo</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="course-detail" data-cat="design" data-name="javascript core js" data-aos="fade-up">
+                    <div class="cd-img"><img src="https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?w=600&q=80"
+                            alt="JavaScript" />
+                        <div class="cd-overlay"></div>
+                    </div>
+                    <div class="cd-body"><span class="cd-tag">JavaScript</span>
+                        <h3>Core JavaScript</h3>
+                        <p>Master the language of the web — variables, functions, DOM, events and modern JS (ES6+).</p>
+                        <div class="cd-meta"><span>⏱ 2 Months</span><span>🎓 Certificate</span><span>💻
+                                Online+Offline</span></div>
+                        <ul class="cd-feats">
+                            <li>ES6+ Syntax</li>
+                            <li>DOM Manipulation</li>
+                            <li>Events &amp; Forms</li>
+                            <li>AJAX &amp; APIs</li>
+                            <li>Mini Projects</li>
+                            <li>Debugging</li>
+                        </ul>
+                        <div class="cd-actions"><a href="Contact.html" class="btn-sm">Enroll Now →</a><a
+                                href="Appointment.html" class="btn-sm" style="background:var(--orange);">Free Demo</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="course-detail" data-cat="design" data-name="wordpress cms website" data-aos="fade-up">
+                    <div class="cd-img"><img src="https://images.unsplash.com/photo-1559028012-481c04fa702d?w=600&q=80"
+                            alt="WordPress" />
+                        <div class="cd-overlay"></div>
+                    </div>
+                    <div class="cd-body"><span class="cd-tag">CMS</span>
+                        <h3>WordPress</h3>
+                        <p>Build professional websites without heavy coding. The world's most popular CMS platform.</p>
+                        <div class="cd-meta"><span>⏱ 1.5 Months</span><span>🎓 Certificate</span><span>💻
+                                Online+Offline</span></div>
+                        <ul class="cd-feats">
+                            <li>Themes &amp; Plugins</li>
+                            <li>WooCommerce</li>
+                            <li>SEO Setup</li>
+                            <li>Page Builder</li>
+                            <li>Maintenance</li>
+                            <li>Custom Domain</li>
+                        </ul>
+                        <div class="cd-actions"><a href="Contact.html" class="btn-sm">Enroll Now →</a><a
+                                href="Appointment.html" class="btn-sm" style="background:var(--orange);">Free Demo</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="course-detail" data-cat="programming" data-name="c language programming" data-aos="fade-up">
+                    <div class="cd-img"><img
+                            src="https://images.unsplash.com/photo-1515879218367-8466d910aaa4?w=600&q=80"
+                            alt="C Language" />
+                        <div class="cd-overlay"></div>
+                    </div>
+                    <div class="cd-body"><span class="cd-tag">Programming</span>
+                        <h3>C Language Course</h3>
+                        <p>Master the foundation of all programming languages. C is the gateway to systems programming.
+                        </p>
+                        <div class="cd-meta"><span>⏱ 2–3 Months</span><span>🎓 Certificate</span><span>💻
+                                Online+Offline</span></div>
+                        <ul class="cd-feats">
+                            <li>Data Types &amp; Operators</li>
+                            <li>Control Structures</li>
+                            <li>Functions &amp; Arrays</li>
+                            <li>Pointers</li>
+                            <li>Structures</li>
+                            <li>File Handling</li>
+                        </ul>
+                        <div class="cd-actions"><a href="Contact.html" class="btn-sm">Enroll Now →</a><a
+                                href="Appointment.html" class="btn-sm" style="background:var(--orange);">Free Demo</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="course-detail" data-cat="programming" data-name="c++ cpp oop object oriented"
+                    data-aos="fade-up">
+                    <div class="cd-img"><img src="https://images.unsplash.com/photo-1542831371-29b0f74f9713?w=600&q=80"
+                            alt="C++" />
+                        <div class="cd-overlay"></div>
+                    </div>
+                    <div class="cd-body"><span class="cd-tag">Programming</span>
+                        <h3>C++ Programming</h3>
+                        <p>Take your programming to the next level with object-oriented programming and data structures.
+                        </p>
+                        <div class="cd-meta"><span>⏱ 2–3 Months</span><span>🎓 Certificate</span><span>💻
+                                Online+Offline</span></div>
+                        <ul class="cd-feats">
+                            <li>OOP Concepts</li>
+                            <li>Classes &amp; Objects</li>
+                            <li>Inheritance</li>
+                            <li>Polymorphism</li>
+                            <li>Templates</li>
+                            <li>STL</li>
+                        </ul>
+                        <div class="cd-actions"><a href="Contact.html" class="btn-sm">Enroll Now →</a><a
+                                href="Appointment.html" class="btn-sm" style="background:var(--orange);">Free Demo</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="course-detail" data-cat="programming" data-name="python programming data"
+                    data-aos="fade-up">
+                    <div class="cd-img"><img
+                            src="https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?w=600&q=80"
+                            alt="Python" />
+                        <div class="cd-overlay"></div>
+                        <div class="cd-badge">Hot 🔥</div>
+                    </div>
+                    <div class="cd-body"><span class="cd-tag">Programming</span>
+                        <h3>Python Programming</h3>
+                        <p>Python — the most in-demand language for automation, data science, AI, and web development.
+                        </p>
+                        <div class="cd-meta"><span>⏱ 3 Months</span><span>🎓 Certificate</span><span>💻
+                                Online+Offline</span></div>
+                        <ul class="cd-feats">
+                            <li>Python Basics</li>
+                            <li>OOP in Python</li>
+                            <li>Libraries &amp; Modules</li>
+                            <li>File Handling</li>
+                            <li>NumPy / Pandas</li>
+                            <li>Mini Projects</li>
+                        </ul>
+                        <div class="cd-actions"><a href="Contact.html" class="btn-sm">Enroll Now →</a><a
+                                href="Appointment.html" class="btn-sm" style="background:var(--orange);">Free Demo</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="course-detail" data-cat="office" data-name="advanced excel formulas pivot"
+                    data-aos="fade-up">
+                    <div class="cd-img"><img
+                            src="https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=600&q=80"
+                            alt="Advanced Excel" />
+                        <div class="cd-overlay"></div>
+                    </div>
+                    <div class="cd-body"><span class="cd-tag">MS Excel</span>
+                        <h3>Advanced Excel Course</h3>
+                        <p>Become an Excel power user — master data analysis, advanced formulas, pivot tables and VBA
+                            automation.</p>
+                        <div class="cd-meta"><span>⏱ 1–2 Months</span><span>🎓 Certificate</span><span>💻
+                                Online+Offline</span></div>
+                        <ul class="cd-feats">
+                            <li>Advanced Formulas</li>
+                            <li>Pivot Tables</li>
+                            <li>Data Visualization</li>
+                            <li>Macros &amp; VBA</li>
+                            <li>Power Query</li>
+                            <li>Dashboard Design</li>
+                        </ul>
+                        <div class="cd-actions"><a href="Contact.html" class="btn-sm">Enroll Now →</a><a
+                                href="Appointment.html" class="btn-sm" style="background:var(--orange);">Free Demo</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="course-detail" data-cat="office" data-name="ms office word excel powerpoint"
+                    data-aos="fade-up">
+                    <div class="cd-img"><img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&q=80"
+                            alt="MS Office" />
+                        <div class="cd-overlay"></div>
+                    </div>
+                    <div class="cd-body"><span class="cd-tag">MS Office</span>
+                        <h3>MS Office Complete</h3>
+                        <p>A comprehensive course covering all MS Office applications — Word, Excel, PowerPoint &amp;
+                            Outlook.</p>
+                        <div class="cd-meta"><span>⏱ 1.5 Months</span><span>🎓 Certificate</span><span>💻
+                                Online+Offline</span></div>
+                        <ul class="cd-feats">
+                            <li>MS Word Advanced</li>
+                            <li>Excel Formulas</li>
+                            <li>PowerPoint Design</li>
+                            <li>MS Access</li>
+                            <li>Outlook</li>
+                            <li>OneDrive</li>
+                        </ul>
+                        <div class="cd-actions"><a href="Contact.html" class="btn-sm">Enroll Now →</a><a
+                                href="Appointment.html" class="btn-sm" style="background:var(--orange);">Free Demo</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="course-detail" data-cat="basics" data-name="basic computer fundamentals" data-aos="fade-up">
+                    <div class="cd-img"><img
+                            src="https://images.unsplash.com/photo-1593642632559-0c6d3fc62b89?w=600&q=80"
+                            alt="Basic Computer" />
+                        <div class="cd-overlay"></div>
+                    </div>
+                    <div class="cd-body"><span class="cd-tag">Basics</span>
+                        <h3>Basic Computer Course</h3>
+                        <p>Start your digital journey. Learn computer fundamentals, MS Office, internet skills &amp;
+                            typing.</p>
+                        <div class="cd-meta"><span>⏱ 1–2 Months</span><span>🎓 Certificate</span><span>💻
+                                Online+Offline</span></div>
+                        <ul class="cd-feats">
+                            <li>Computer Fundamentals</li>
+                            <li>MS Word</li>
+                            <li>MS Excel Basics</li>
+                            <li>PowerPoint</li>
+                            <li>Internet &amp; Email</li>
+                            <li>Typing Practice</li>
+                        </ul>
+                        <div class="cd-actions"><a href="Contact.html" class="btn-sm">Enroll Now →</a><a
+                                href="Appointment.html" class="btn-sm" style="background:var(--orange);">Free Demo</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="course-detail" data-cat="basics" data-name="adca diploma computer" data-aos="fade-up">
+                    <div class="cd-img"><img
+                            src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=600&q=80" alt="ADCA" />
+                        <div class="cd-overlay"></div>
+                        <div class="cd-badge">Diploma</div>
+                    </div>
+                    <div class="cd-body"><span class="cd-tag">Diploma</span>
+                        <h3>ADCA Diploma</h3>
+                        <p>Advanced Diploma in Computer Applications — a complete package covering all essential IT
+                            skills.</p>
+                        <div class="cd-meta"><span>⏱ 6–12 Months</span><span>🎓 Diploma</span><span>💻
+                                Online+Offline</span></div>
+                        <ul class="cd-feats">
+                            <li>MS Office Suite</li>
+                            <li>Accounting Basics</li>
+                            <li>Internet &amp; Email</li>
+                            <li>C Language Intro</li>
+                            <li>Web Designing</li>
+                            <li>Project</li>
+                        </ul>
+                        <div class="cd-actions"><a href="Contact.html" class="btn-sm">Enroll Now →</a><a
+                                href="Appointment.html" class="btn-sm" style="background:var(--orange);">Free Demo</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="course-detail" data-cat="marketing" data-name="digital marketing seo google ads"
+                    data-aos="fade-up">
+                    <div class="cd-img"><img
+                            src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&q=80"
+                            alt="Digital Marketing" />
+                        <div class="cd-overlay"></div>
+                        <div class="cd-badge">Hot 🔥</div>
+                    </div>
+                    <div class="cd-body"><span class="cd-tag">Marketing</span>
+                        <h3>Digital Marketing</h3>
+                        <p>Master the art of online marketing — SEO, social media, content strategy, and paid
+                            advertising.</p>
+                        <div class="cd-meta"><span>⏱ 2–3 Months</span><span>🎓 Certificate</span><span>💻
+                                Online+Offline</span></div>
+                        <ul class="cd-feats">
+                            <li>SEO &amp; SEM</li>
+                            <li>Social Media</li>
+                            <li>Content Marketing</li>
+                            <li>Google Ads</li>
+                            <li>Email Marketing</li>
+                            <li>Analytics</li>
+                        </ul>
+                        <div class="cd-actions"><a href="Contact.html" class="btn-sm">Enroll Now →</a><a
+                                href="Appointment.html" class="btn-sm" style="background:var(--orange);">Free Demo</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="course-detail" data-cat="marketing" data-name="canva design graphics social media"
+                    data-aos="fade-up">
+                    <div class="cd-img"><img
+                            src="https://images.unsplash.com/photo-1572044162444-ad60f128bdea?w=600&q=80" alt="Canva" />
+                        <div class="cd-overlay"></div>
+                    </div>
+                    <div class="cd-body"><span class="cd-tag">Design</span>
+                        <h3>Canva Design</h3>
+                        <p>Create stunning graphics, posts, banners and presentations with Canva — no design degree
+                            needed.</p>
+                        <div class="cd-meta"><span>⏱ 1 Month</span><span>🎓 Certificate</span><span>💻
+                                Online+Offline</span></div>
+                        <ul class="cd-feats">
+                            <li>Social Posts</li>
+                            <li>Banners &amp; Flyers</li>
+                            <li>Presentations</li>
+                            <li>Brand Identity</li>
+                            <li>Video Graphics</li>
+                            <li>Templates</li>
+                        </ul>
+                        <div class="cd-actions"><a href="Contact.html" class="btn-sm">Enroll Now →</a><a
+                                href="Appointment.html" class="btn-sm" style="background:var(--orange);">Free Demo</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="no-results" id="noResults">🔍 No courses found. Try a different search term.</div>
+        </div>
+    </section>
+
+    <!-- STATS -->
+    <div class="stats">
+        <div class="stats-grid max-w">
+            <div class="stat-item" data-aos="fade-up">
+                <div class="stat-num">20<span class="stat-suf">+</span></div>
+                <div class="stat-label">Courses Offered</div>
+            </div>
+            <div class="stat-item" data-aos="fade-up" data-aos-delay="100">
+                <div class="stat-num">500<span class="stat-suf">+</span></div>
+                <div class="stat-label">Students Enrolled</div>
+            </div>
+            <div class="stat-item" data-aos="fade-up" data-aos-delay="200">
+                <div class="stat-num">100<span class="stat-suf">%</span></div>
+                <div class="stat-label">Placement Support</div>
+            </div>
+            <div class="stat-item" data-aos="fade-up" data-aos-delay="300">
+                <div class="stat-num">4.9<span class="stat-suf">★</span></div>
+                <div class="stat-label">Average Rating</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CTA BAND -->
+    <div class="cta-band" data-aos="fade-up">
+        <h2>Not Sure Which <span>Course to Choose?</span></h2>
+        <p>Book a free counselling session and our team will help you pick the right course for your goals.</p>
+        <div class="cta-btns">
+            <a href="Appointment.html" class="btn-pill">Book Free Counselling →</a>
+            <a href="Contact.html" class="btn-pill-outline">Talk to Us</a>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="max-w">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="footer-logo">
+                        <img height="300px" src="./image/Coding expert png.png" alt="The Coding Expert" />
+                    </div>
+                    <p>Premier IT training institute in Ballabgarh offering best quality education at affordable fees.
+                    </p>
+                    <div class="social-links">
+                        <a href="https://www.youtube.com/channel/UCrwd04lAF_SWs9wcfB3vgEg" target="_blank"
+                            class="social-btn">▶</a>
+                        <a href="https://www.instagram.com/invites/contact/?i=1ub4yoodnzixy" target="_blank"
+                            class="social-btn">📷</a>
+                        <a href="https://www.facebook.com/profile.php?id=100087768400885" target="_blank"
+                            class="social-btn">f</a>
+                        <a href="https://wa.me/918595210430" target="_blank" class="social-btn">💬</a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="coures.html">Courses</a></li>
+                        <li><a href="Faculties.html">Faculties</a></li>
+                        <li><a href="Testimonials.html">Testimonials</a></li>
+                        <li><a href="blog.html">Blog</a></li>
+                        <li><a href="Contact.html">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Our Courses</h4>
+                    <ul class="footer-links">
+                        <li><a href="coures.html">Web Designing</a></li>
+                        <li><a href="coures.html">C / C++ Language</a></li>
+                        <li><a href="coures.html">Python</a></li>
+                        <li><a href="coures.html">Advanced Excel</a></li>
+                        <li><a href="coures.html">MS Office Complete</a></li>
+                        <li><a href="coures.html">Digital Marketing</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact Details</h4>
+                    <div class="footer-contact-list">
+                        <div class="footer-contact-item"><span class="fci">📍</span><span class="fct">Shop No. 2066 A,
+                                Ground Floor, Gyan Shala Institute, near Tagore Academy Public School, Sector-3,
+                                Ballabhgarh, Faridabad, 121004.
+                            </span></div>
+                        <div class="footer-contact-item"><span class="fci">📞</span><span class="fct">+91
+                                8287873915<br>+91 8595210430</span></div>
+                        <div class="footer-contact-item"><span class="fci">✉️</span><span
+                                class="fct">clearninginstitute@gmail.com</span></div>
+                        <div class="footer-contact-item"><span class="fci">🕐</span><span class="fct">Mon – Sat: 10am –
+                                8:30pm</span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2025 The Coding Expert – All rights reserved.</p>
+                <p>Designed with ❤️ for Faculties of Ballabgarh</p>
+            </div>
+        </div>
+    </footer>
+
+    <a href="https://wa.me/918595210430" target="_blank" class="wa-fab">💬</a>
+    <button id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script>
+        document.addEventListener('contextmenu', function (e) { e.preventDefault() });
+        document.addEventListener('keydown', function (e) { if (e.ctrlKey && ['u', 'U', 's', 'S'].includes(e.key)) e.preventDefault(); if (e.key === 'F12') e.preventDefault(); if (e.ctrlKey && e.shiftKey && ['I', 'i', 'J', 'j', 'C', 'c'].includes(e.key)) e.preventDefault(); });
+        document.addEventListener('selectstart', function (e) { if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') e.preventDefault(); });
+        window.addEventListener('scroll', function () { var s = window.scrollY, h = document.body.scrollHeight - window.innerHeight; document.getElementById('scroll-prog').style.width = (s / h * 100) + '%'; document.getElementById('backTop').classList.toggle('show', s > 400); document.querySelector('.navbar-wrap').classList.toggle('scrolled', s > 60); });
+        document.getElementById('hbg').addEventListener('click', function () { document.getElementById('mobMenu').classList.toggle('open'); });
+        AOS.init({ once: true, duration: 700, easing: 'ease-out-cubic', offset: 60 });
+
+        new Swiper('.swiper-featured', { loop: true, autoplay: { delay: 3500, disableOnInteraction: false }, slidesPerView: 3, spaceBetween: 20, pagination: { el: '.swiper-featured .swiper-pagination', clickable: true }, breakpoints: { 0: { slidesPerView: 1 }, 700: { slidesPerView: 2 }, 1024: { slidesPerView: 3 } } });
+
+        var currentCat = 'all';
+        function filterCourses(cat, btn) {
+            currentCat = cat;
+            document.querySelectorAll('.filter-tab').forEach(function (t) { t.classList.remove('active') });
+            btn.classList.add('active');
+            document.getElementById('courseSearch').value = '';
+            applyFilter();
+        }
+
+        function searchCourses() {
+            currentCat = 'all';
+            document.querySelectorAll('.filter-tab').forEach(function (t) { t.classList.remove('active'); });
+            document.querySelector('.filter-tab:first-child').classList.add('active');
+            applyFilter();
+        }
+
+        function applyFilter() {
+            var query = document.getElementById('courseSearch').value.toLowerCase();
+            var cards = document.querySelectorAll('.course-detail');
+            var visible = 0;
+            cards.forEach(function (card) {
+                var catMatch = (currentCat === 'all' || card.dataset.cat === currentCat);
+                var nameMatch = !query || card.dataset.name.includes(query) || card.querySelector('h3').textContent.toLowerCase().includes(query);
+                if (catMatch && nameMatch) { card.classList.remove('hidden'); visible++; }
+                else { card.classList.add('hidden'); }
+            });
+            document.getElementById('noResults').style.display = visible === 0 ? 'block' : 'none';
+        }
+
+        var p = document.createElement('div');
+        document.addEventListener('mousemove', function (e) {
+            if (window.innerWidth > 1000) {
+                p.className = 'partical'; p.style.left = e.clientX + 'px'; p.style.top = e.clientY + 'px'; document.body.appendChild(p);
+                setTimeout(function () { p.remove(); }, 1000);
+            }
+        });
+    </script>
+</body>
+
+</html>

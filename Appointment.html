@@ -1,0 +1,1017 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Book Appointment – The Coding Expert | Ballabgarh, Faridabad</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Nunito:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/mediaQ.css" />
+    <style>
+        #scroll-prog {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--orange), #f97316cc);
+            z-index: 9999;
+            width: 0%;
+        }
+
+        #backTop {
+            position: fixed;
+            bottom: 28px;
+            left: 28px;
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            background: var(--navy);
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 20px rgba(30, 58, 138, .35);
+            opacity: 0;
+            visibility: hidden;
+            transition: all .3s;
+            z-index: 500;
+        }
+
+        #backTop.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        #backTop:hover {
+            background: var(--orange);
+            transform: translateY(-3px);
+        }
+
+        .booking-page {
+            background: var(--light);
+            padding: 80px 5%;
+        }
+
+        .booking-wrap {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .booking-grid {
+            display: grid;
+            grid-template-columns: 1fr 380px;
+            gap: 36px;
+            align-items: start;
+        }
+
+        .step-card {
+            background: white;
+            border-radius: 20px;
+            border: 1px solid rgba(30, 58, 138, .08);
+            box-shadow: 0 6px 28px rgba(30, 58, 138, .08);
+        }
+
+        .step-header {
+            padding: 28px 32px 0;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .step-num {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: var(--navy);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 800;
+            font-size: 15px;
+            flex-shrink: 0;
+        }
+
+        .step-title {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 800;
+            font-size: 17px;
+            color: var(--dark);
+        }
+
+        .step-sub {
+            font-size: 13px;
+            color: var(--muted);
+            font-weight: 500;
+            margin-top: 3px;
+        }
+
+        .step-body {
+            padding: 24px 32px 30px;
+        }
+
+        /* Calendar */
+        .calendar-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 18px;
+        }
+
+        .cal-nav {
+            background: var(--navy-soft);
+            border: none;
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background .2s;
+            color: var(--navy);
+        }
+
+        .cal-nav:hover {
+            background: var(--navy);
+            color: white;
+        }
+
+        .cal-month {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 800;
+            font-size: 16px;
+            color: var(--dark);
+        }
+
+        .cal-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 4px;
+        }
+
+        .cal-day-label {
+            text-align: center;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 11px;
+            color: var(--muted);
+            padding: 6px 0;
+        }
+
+        .cal-day {
+            text-align: center;
+            padding: 8px 4px;
+            border-radius: 10px;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--text);
+            cursor: pointer;
+            transition: all .2s;
+        }
+
+        .cal-day:hover:not(.empty):not(.past) {
+            background: var(--navy-soft);
+            color: var(--navy);
+        }
+
+        .cal-day.selected {
+            background: var(--navy);
+            color: white;
+            font-weight: 800;
+        }
+
+        .cal-day.today {
+            border: 2px solid var(--orange);
+            color: var(--orange);
+            font-weight: 800;
+        }
+
+        .cal-day.past {
+            color: rgba(0, 0, 0, .2);
+            cursor: not-allowed;
+        }
+
+        .cal-day.empty {
+            cursor: default;
+        }
+
+        /* Time slots */
+        .slots-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+
+        .slot {
+            padding: 12px 8px;
+            border-radius: 12px;
+            border: 2px solid var(--navy-bg);
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 13px;
+            text-align: center;
+            cursor: pointer;
+            transition: all .2s;
+            color: var(--dark);
+        }
+
+        .slot:hover:not(.booked) {
+            border-color: var(--navy);
+            background: var(--navy-soft);
+            color: var(--navy);
+        }
+
+        .slot.selected {
+            background: var(--navy);
+            color: white;
+            border-color: var(--navy);
+        }
+
+        .slot.booked {
+            background: var(--light);
+            color: rgba(0, 0, 0, .3);
+            cursor: not-allowed;
+            border-color: transparent;
+            text-decoration: line-through;
+        }
+
+        /* Course chips */
+        .course-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .course-chip {
+            padding: 9px 18px;
+            border-radius: 50px;
+            border: 2px solid var(--navy-bg);
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all .2s;
+            color: var(--muted);
+            background: white;
+        }
+
+        .course-chip:hover {
+            border-color: var(--navy);
+            color: var(--navy);
+        }
+
+        .course-chip.selected {
+            background: var(--navy);
+            color: white;
+            border-color: var(--navy);
+        }
+
+        /* Mode cards */
+        .mode-cards {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .mode-card {
+            border: 2px solid var(--navy-bg);
+            border-radius: 16px;
+            padding: 24px;
+            text-align: center;
+            cursor: pointer;
+            transition: all .3s;
+        }
+
+        .mode-card:hover {
+            border-color: var(--navy);
+        }
+
+        .mode-card.selected {
+            border-color: var(--navy);
+            background: var(--navy-soft);
+        }
+
+        .mode-icon {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+        .mode-title {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 800;
+            font-size: 16px;
+            color: var(--dark);
+            margin-bottom: 6px;
+        }
+
+        .mode-desc {
+            font-size: 13px;
+            color: var(--muted);
+            line-height: 1.6;
+        }
+
+        /* Summary card */
+        .summary-card {
+            background: white;
+            border-radius: 20px;
+            padding: 28px;
+            border: 1px solid rgba(30, 58, 138, .08);
+            box-shadow: 0 6px 28px rgba(30, 58, 138, .08);
+            position: sticky;
+            top: 90px;
+        }
+
+        .summary-title {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 800;
+            font-size: 17px;
+            color: var(--dark);
+            margin-bottom: 22px;
+            padding-bottom: 14px;
+            border-bottom: 2px solid var(--navy-bg);
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 14px;
+            gap: 10px;
+        }
+
+        .summary-label {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--muted);
+        }
+
+        .summary-value {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 14px;
+            color: var(--dark);
+            text-align: right;
+        }
+
+        .summary-empty {
+            color: rgba(0, 0, 0, .25);
+            font-weight: 500;
+        }
+
+        .confirm-btn {
+            width: 100%;
+            padding: 16px;
+            background: var(--navy);
+            color: white;
+            border: none;
+            border-radius: 14px;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 800;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all .3s;
+            margin-top: 8px;
+        }
+
+        .confirm-btn:hover {
+            background: var(--orange);
+            transform: translateY(-2px);
+        }
+
+        .confirm-btn:disabled {
+            background: var(--muted);
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .summary-note {
+            font-size: 12px;
+            color: var(--muted);
+            text-align: center;
+            margin-top: 12px;
+            line-height: 1.6;
+        }
+
+        .summary-free-tag {
+            background: var(--orange-light);
+            color: var(--orange-dark);
+            font-family: 'Outfit', sans-serif;
+            font-weight: 800;
+            font-size: 13px;
+            padding: 8px 16px;
+            border-radius: 10px;
+            text-align: center;
+            margin-bottom: 18px;
+        }
+
+        /* Success screen */
+        .success-screen {
+            display: none;
+            text-align: center;
+            padding: 60px 32px;
+        }
+
+        .success-screen.show {
+            display: block;
+        }
+
+        .success-icon {
+            font-size: 70px;
+            margin-bottom: 20px;
+            animation: popIn .5s cubic-bezier(.22, 1, .36, 1);
+        }
+
+        @keyframes popIn {
+            0% {
+                transform: scale(0)
+            }
+
+            100% {
+                transform: scale(1)
+            }
+        }
+
+        .success-title {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 900;
+            font-size: 1.8rem;
+            color: var(--dark);
+            margin-bottom: 12px;
+        }
+
+        .success-title em {
+            font-style: normal;
+            color: var(--orange);
+        }
+
+        .success-msg {
+            font-size: 15px;
+            color: var(--muted);
+            line-height: 1.8;
+            margin-bottom: 28px;
+        }
+
+        /* Progress steps */
+        .progress-steps {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            max-width: 600px;
+            margin: 0 auto 40px;
+        }
+
+        .prog-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .prog-dot {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background: var(--navy-soft);
+            border: 2px solid var(--navy-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 800;
+            font-size: 14px;
+            color: var(--muted);
+        }
+
+        .prog-dot.active {
+            background: var(--navy);
+            border-color: var(--navy);
+            color: white;
+        }
+
+        .prog-dot.done {
+            background: var(--orange);
+            border-color: var(--orange);
+            color: white;
+        }
+
+        .prog-label {
+            font-family: 'Outfit', sans-serif;
+            font-size: 11.5px;
+            font-weight: 700;
+            color: var(--muted);
+            white-space: nowrap;
+        }
+
+        .prog-label.active {
+            color: var(--navy);
+        }
+
+        .prog-line {
+            flex: 1;
+            height: 2px;
+            background: var(--navy-bg);
+            margin: 0 8px;
+            margin-bottom: 16px;
+        }
+
+        .prog-line.done {
+            background: var(--navy);
+        }
+
+        /* Trust badges */
+        .trust-badges {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            margin-top: 22px;
+            padding-top: 20px;
+            border-top: 2px solid var(--navy-bg);
+        }
+
+        .trust-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 13px;
+            color: var(--muted);
+            font-weight: 600;
+        }
+
+        .trust-item span:first-child {
+            font-size: 18px;
+        }
+
+        @media(max-width:900px) {
+            .booking-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .summary-card {
+                position: static;
+            }
+
+            .slots-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .mode-cards {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="scroll-prog"></div>
+
+    <!-- NAVBAR -->
+    <div class="navbar-wrap">
+        <div class="nav-top">
+            <div class="nav-top-left">🏆 <span>Ballabgarh's #1 Coding Institute</span> &nbsp;·&nbsp; Sector-3,
+                Ballabgarh, Faridabad</div>
+            <div class="nav-top-right">
+                <a href="tel:+918595210430" class="nav-top-link"><span class="nt-icon">📞</span> +91 8595210430</a>
+                <div class="nav-top-divider"></div>
+                <a href="mailto:clearninginstitute@gmail.com" class="nav-top-link"><span class="nt-icon">✉️</span>
+                    clearninginstitute@gmail.com</a>
+                <div class="nav-top-divider"></div>
+                <a href="https://wa.me/918595210430" target="_blank" class="nav-top-link"><span
+                        class="nt-icon">💬</span> WhatsApp</a>
+            </div>
+        </div>
+        <nav>
+            <a href="index.html" class="nav-logo"><img src="./image/Coding expert png.png"
+                    alt="The Coding Expert" /></a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="coures.html">Courses</a></li>
+                <li><a href="Faculties.html">Faculties</a></li>
+                <li><a href="Testimonials.html">Testimonials</a></li>
+                <li><a href="blog.html">Blog</a></li>
+                <li><a href="Contact.html">Contact</a></li>
+            </ul>
+            <a href="Appointment.html" class="nav-btn" style="background:var(--orange);border-color:var(--orange);">📅
+                Book Appointment</a>
+            <button class="hamburger" id="hbg"><span></span><span></span><span></span></button>
+        </nav>
+    </div>
+    <div class="mobile-menu" id="mobMenu">
+        <a href="index.html">Home</a><a href="about.html">About</a><a href="coures.html">Courses</a>
+        <a href="Faculties.html">Faculties</a><a href="Testimonials.html">Testimonials</a>
+        <a href="blog.html">Blog</a><a href="Contact.html">Contact</a>
+        <a href="Appointment.html" class="mob-cta">📅 Book Appointment</a>
+    </div>
+
+    <!-- PAGE HERO -->
+    <div class="page-hero">
+        <div class="max-w">
+            <div class="breadcrumb"><a href="index.html">Home</a> › <span>Book Appointment</span></div>
+            <h1>Book Your <span>Free Demo</span></h1>
+            <p>Reserve your free demo class in 3 easy steps. No payment required — just pick a date and time!</p>
+        </div>
+        <div class="page-hero-wave">
+            <svg viewBox="0 0 1440 70" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"
+                style="width:100%;display:block;">
+                <path d="M0,35 C360,75 1080,-5 1440,35 L1440,70 L0,70 Z" fill="var(--light)" />
+            </svg>
+        </div>
+    </div>
+
+    <!-- BOOKING PAGE -->
+    <section class="booking-page">
+        <div class="booking-wrap">
+
+            <!-- Progress Steps -->
+            <div class="progress-steps" data-aos="fade-up">
+                <div class="prog-step">
+                    <div class="prog-dot active" id="dot1">1</div>
+                    <span class="prog-label active">Date &amp; Time</span>
+                </div>
+                <div class="prog-line" id="line1"></div>
+                <div class="prog-step">
+                    <div class="prog-dot" id="dot2">2</div>
+                    <span class="prog-label" id="label2">Course &amp; Mode</span>
+                </div>
+                <div class="prog-line" id="line2"></div>
+                <div class="prog-step">
+                    <div class="prog-dot" id="dot3">3</div>
+                    <span class="prog-label" id="label3">Your Details</span>
+                </div>
+            </div>
+
+            <div class="booking-grid">
+                <!-- LEFT: Steps -->
+                <div id="bookingForm">
+
+                    <!-- STEP 1: Date -->
+                    <div class="step-card" style="margin-bottom:24px;" data-aos="fade-up">
+                        <div class="step-header">
+                            <div class="step-num">1</div>
+                            <div>
+                                <div class="step-title">Pick a Date</div>
+                                <div class="step-sub">Select your preferred date for the demo class</div>
+                            </div>
+                        </div>
+                        <div class="step-body">
+                            <div class="calendar-header">
+                                <button class="cal-nav" onclick="prevMonth()">←</button>
+                                <div class="cal-month" id="calMonth"></div>
+                                <button class="cal-nav" onclick="nextMonth()">→</button>
+                            </div>
+                            <div class="cal-grid" id="calGrid"></div>
+                        </div>
+                    </div>
+
+                    <!-- STEP 2: Time -->
+                    <div class="step-card" style="margin-bottom:24px;" data-aos="fade-up">
+                        <div class="step-header">
+                            <div class="step-num">2</div>
+                            <div>
+                                <div class="step-title">Choose a Time Slot</div>
+                                <div class="step-sub">Available demo class timings</div>
+                            </div>
+                        </div>
+                        <div class="step-body">
+                            <div class="slots-grid">
+                                <div class="slot" onclick="selectSlot(this)">10:00 AM</div>
+                                <div class="slot" onclick="selectSlot(this)">11:00 AM</div>
+                                <div class="slot booked">12:00 PM</div>
+                                <div class="slot" onclick="selectSlot(this)">2:00 PM</div>
+                                <div class="slot" onclick="selectSlot(this)">3:00 PM</div>
+                                <div class="slot booked">4:00 PM</div>
+                                <div class="slot" onclick="selectSlot(this)">5:00 PM</div>
+                                <div class="slot" onclick="selectSlot(this)">6:00 PM</div>
+                                <div class="slot" onclick="selectSlot(this)">7:00 PM</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- STEP 3: Course (Tally removed) -->
+                    <div class="step-card" style="margin-bottom:24px;" data-aos="fade-up">
+                        <div class="step-header">
+                            <div class="step-num">3</div>
+                            <div>
+                                <div class="step-title">Select a Course</div>
+                                <div class="step-sub">Which course are you interested in?</div>
+                            </div>
+                        </div>
+                        <div class="step-body">
+                            <div class="course-chips">
+                                <div class="course-chip" onclick="selectCourse(this)">Web Designing</div>
+                                <div class="course-chip" onclick="selectCourse(this)">C Language</div>
+                                <div class="course-chip" onclick="selectCourse(this)">C++ Programming</div>
+                                <div class="course-chip" onclick="selectCourse(this)">Python</div>
+                                <div class="course-chip" onclick="selectCourse(this)">Advanced Excel</div>
+                                <div class="course-chip" onclick="selectCourse(this)">MS Office Complete</div>
+                                <div class="course-chip" onclick="selectCourse(this)">Basic Computer</div>
+                                <div class="course-chip" onclick="selectCourse(this)">ADCA Diploma</div>
+                                <div class="course-chip" onclick="selectCourse(this)">Digital Marketing</div>
+                                <div class="course-chip" onclick="selectCourse(this)">Social Media Marketing</div>
+                                <div class="course-chip" onclick="selectCourse(this)">Canva Design</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- STEP 4: Mode -->
+                    <div class="step-card" style="margin-bottom:24px;" data-aos="fade-up">
+                        <div class="step-header">
+                            <div class="step-num">4</div>
+                            <div>
+                                <div class="step-title">Offline or Online?</div>
+                                <div class="step-sub">Choose how you'd like to attend</div>
+                            </div>
+                        </div>
+                        <div class="step-body">
+                            <div class="mode-cards">
+                                <div class="mode-card" onclick="selectMode(this,'Offline')">
+                                    <div class="mode-icon">🏫</div>
+                                    <div class="mode-title">Offline</div>
+                                    <div class="mode-desc">Visit our institute in Sector-3, Ballabgarh for an in-person
+                                        session</div>
+                                </div>
+                                <div class="mode-card" onclick="selectMode(this,'Online')">
+                                    <div class="mode-icon">💻</div>
+                                    <div class="mode-title">Online</div>
+                                    <div class="mode-desc">Attend via video call from the comfort of your home</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- STEP 5: Personal Details -->
+                    <div class="step-card" data-aos="fade-up">
+                        <div class="step-header">
+                            <div class="step-num">5</div>
+                            <div>
+                                <div class="step-title">Your Details</div>
+                                <div class="step-sub">Tell us a little about yourself</div>
+                            </div>
+                        </div>
+                        <div class="step-body">
+                            <div class="form-row">
+                                <div class="form-group"><label>Full Name *</label><input type="text" id="fname"
+                                        placeholder="Your full name" /></div>
+                                <div class="form-group"><label>Phone Number *</label><input type="tel" id="fphone"
+                                        placeholder="+91 XXXXX XXXXX" /></div>
+                            </div>
+                            <div class="form-group"><label>Email Address</label><input type="email" id="femail"
+                                    placeholder="your@email.com" /></div>
+                            <div class="form-group"><label>Any questions?</label><textarea
+                                    placeholder="Optional — let us know if you have any specific requirements..."
+                                    style="min-height:80px;"></textarea></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- RIGHT: Summary -->
+                <div>
+                    <div class="summary-card" data-aos="fade-left">
+                        <div class="summary-free-tag">🎁 100% FREE — No Payment Required</div>
+                        <div class="summary-title">📋 Booking Summary</div>
+                        <div class="summary-row"><span class="summary-label">Date</span><span
+                                class="summary-value summary-empty" id="sum-date">Not selected</span></div>
+                        <div class="summary-row"><span class="summary-label">Time</span><span
+                                class="summary-value summary-empty" id="sum-time">Not selected</span></div>
+                        <div class="summary-row"><span class="summary-label">Course</span><span
+                                class="summary-value summary-empty" id="sum-course">Not selected</span></div>
+                        <div class="summary-row"><span class="summary-label">Mode</span><span
+                                class="summary-value summary-empty" id="sum-mode">Not selected</span></div>
+                        <button class="confirm-btn" onclick="confirmBooking()" id="confirmBtn">Confirm Booking
+                            →</button>
+                        <p class="summary-note">By booking you agree to our demo class terms. We'll call to confirm
+                            within 24 hours.</p>
+                        <div class="trust-badges">
+                            <div class="trust-item"><span>🔒</span><span>Your data is safe with us</span></div>
+                            <div class="trust-item"><span>📞</span><span>We'll call to confirm booking</span></div>
+                            <div class="trust-item"><span>🎁</span><span>Demo is completely free</span></div>
+                            <div class="trust-item"><span>❌</span><span>Cancel anytime, no questions</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Success Screen -->
+            <div class="step-card success-screen" id="successScreen">
+                <div class="success-icon">🎉</div>
+                <div class="success-title">Demo Class <em>Booked!</em></div>
+                <p class="success-msg">Your free demo class has been booked successfully. Our team will call you on
+                    <strong id="succPhone">your number</strong> within 24 hours to confirm your slot.
+                </p>
+                <div id="successDetails"
+                    style="background:var(--navy-soft);border-radius:14px;padding:20px;margin:0 auto 28px;max-width:400px;text-align:left;">
+                </div>
+                <a href="index.html" class="btn-pill" style="font-size:15px;padding:14px 32px;">← Back to Home</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA BAND -->
+    <div class="cta-band" data-aos="fade-up">
+        <h2>Questions Before <span>Booking?</span></h2>
+        <p>Call us on +91 8595210430 or WhatsApp — we're always happy to help!</p>
+        <div class="cta-btns">
+            <a href="tel:+918595210430" class="btn-pill">📞 Call Now →</a>
+            <a href="https://wa.me/918595210430" target="_blank" class="btn-pill-outline">💬 WhatsApp</a>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="max-w">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="footer-logo">
+                        <img height="300px" src="./image/Coding expert png.png" alt="The Coding Expert" />
+                    </div>
+                    <p>Premier IT training institute in Ballabgarh offering best quality education at affordable fees.
+                    </p>
+                    <div class="social-links">
+                        <a href="https://www.youtube.com/channel/UCrwd04lAF_SWs9wcfB3vgEg" target="_blank"
+                            class="social-btn">▶</a>
+                        <a href="https://www.instagram.com/invites/contact/?i=1ub4yoodnzixy" target="_blank"
+                            class="social-btn">📷</a>
+                        <a href="https://www.facebook.com/profile.php?id=100087768400885" target="_blank"
+                            class="social-btn">f</a>
+                        <a href="https://wa.me/918595210430" target="_blank" class="social-btn">💬</a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="coures.html">Courses</a></li>
+                        <li><a href="Faculties.html">Faculties</a></li>
+                        <li><a href="Testimonials.html">Testimonials</a></li>
+                        <li><a href="blog.html">Blog</a></li>
+                        <li><a href="Contact.html">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Our Courses</h4>
+                    <ul class="footer-links">
+                        <li><a href="coures.html">Web Designing</a></li>
+                        <li><a href="coures.html">C / C++ Language</a></li>
+                        <li><a href="coures.html">Python</a></li>
+                        <li><a href="coures.html">Advanced Excel</a></li>
+                        <li><a href="coures.html">MS Office Complete</a></li>
+                        <li><a href="coures.html">Digital Marketing</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact Details</h4>
+                    <div class="footer-contact-list">
+                        <div class="footer-contact-item"><span class="fci">📍</span><span class="fct">Shop No. 2066 A,
+                                Ground Floor, Gyan Shala Institute, near Tagore Academy Public School, Sector-3,
+                                Ballabhgarh, Faridabad, 121004.
+                            </span></div>
+                        <div class="footer-contact-item"><span class="fci">📞</span><span class="fct">+91
+                                8287873915<br>+91 8595210430</span></div>
+                        <div class="footer-contact-item"><span class="fci">✉️</span><span
+                                class="fct">clearninginstitute@gmail.com</span></div>
+                        <div class="footer-contact-item"><span class="fci">🕐</span><span class="fct">Mon – Sat: 10am –
+                                8:30pm</span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2025 The Coding Expert – All rights reserved.</p>
+                <p>Designed with ❤️ for students of Ballabgarh</p>
+            </div>
+        </div>
+    </footer>
+
+    <a href="https://wa.me/918595210430" target="_blank" class="wa-fab">💬</a>
+    <button id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        document.addEventListener('contextmenu', function (e) { e.preventDefault() });
+        document.addEventListener('keydown', function (e) { if (e.ctrlKey && ['u', 'U', 's', 'S'].includes(e.key)) e.preventDefault(); if (e.key === 'F12') e.preventDefault(); if (e.ctrlKey && e.shiftKey && ['I', 'i', 'J', 'j', 'C', 'c'].includes(e.key)) e.preventDefault(); });
+        document.addEventListener('selectstart', function (e) { if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') e.preventDefault(); });
+        window.addEventListener('scroll', function () { var s = window.scrollY, h = document.body.scrollHeight - window.innerHeight; document.getElementById('scroll-prog').style.width = (s / h * 100) + '%'; document.getElementById('backTop').classList.toggle('show', s > 400); document.querySelector('.navbar-wrap').classList.toggle('scrolled', s > 60); });
+        document.getElementById('hbg').addEventListener('click', function () { document.getElementById('mobMenu').classList.toggle('open'); });
+        AOS.init({ once: true, duration: 700, easing: 'ease-out-cubic', offset: 60 });
+
+        // ── CALENDAR ──
+        var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+        var days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+        var today = new Date();
+        var curYear = today.getFullYear();
+        var curMonth = today.getMonth();
+        var selectedDate = null;
+
+        function renderCalendar() {
+            var ml = document.getElementById('calMonth');
+            var cg = document.getElementById('calGrid');
+            ml.textContent = months[curMonth] + ' ' + curYear;
+            cg.innerHTML = '';
+            days.forEach(function (d) { var el = document.createElement('div'); el.className = 'cal-day-label'; el.textContent = d; cg.appendChild(el); });
+            var first = new Date(curYear, curMonth, 1).getDay();
+            var numDays = new Date(curYear, curMonth + 1, 0).getDate();
+            for (var i = 0; i < first; i++) { var e = document.createElement('div'); e.className = 'cal-day empty'; cg.appendChild(e); }
+            for (var d = 1; d <= numDays; d++) {
+                var el = document.createElement('div');
+                el.className = 'cal-day';
+                el.textContent = d;
+                var thisDate = new Date(curYear, curMonth, d);
+                var isToday = (d === today.getDate() && curMonth === today.getMonth() && curYear === today.getFullYear());
+                var isPast = thisDate < new Date(today.getFullYear(), today.getMonth(), today.getDate());
+                if (isToday) el.classList.add('today');
+                if (isPast) el.classList.add('past');
+                if (!isPast) {
+                    (function (day) {
+                        el.addEventListener('click', function () {
+                            document.querySelectorAll('.cal-day.selected').forEach(function (x) { x.classList.remove('selected'); });
+                            el.classList.add('selected');
+                            selectedDate = months[curMonth] + ' ' + day + ', ' + curYear;
+                            document.getElementById('sum-date').textContent = selectedDate;
+                            document.getElementById('sum-date').classList.remove('summary-empty');
+                            updateProgress();
+                        });
+                    })(d);
+                }
+                cg.appendChild(el);
+            }
+        }
+        function prevMonth() { if (curMonth === 0) { curMonth = 11; curYear--; } else { curMonth--; } renderCalendar(); }
+        function nextMonth() { if (curMonth === 11) { curMonth = 0; curYear++; } else { curMonth++; } renderCalendar(); }
+        renderCalendar();
+
+        // ── SLOT ──
+        function selectSlot(el) {
+            document.querySelectorAll('.slot.selected').forEach(function (x) { x.classList.remove('selected'); });
+            el.classList.add('selected');
+            document.getElementById('sum-time').textContent = el.textContent;
+            document.getElementById('sum-time').classList.remove('summary-empty');
+            updateProgress();
+        }
+
+        // ── COURSE ──
+        function selectCourse(el) {
+            document.querySelectorAll('.course-chip.selected').forEach(function (x) { x.classList.remove('selected'); });
+            el.classList.add('selected');
+            document.getElementById('sum-course').textContent = el.textContent;
+            document.getElementById('sum-course').classList.remove('summary-empty');
+            updateProgress();
+        }
+
+        // ── MODE ──
+        function selectMode(el, mode) {
+            document.querySelectorAll('.mode-card.selected').forEach(function (x) { x.classList.remove('selected'); });
+            el.classList.add('selected');
+            document.getElementById('sum-mode').textContent = mode;
+            document.getElementById('sum-mode').classList.remove('summary-empty');
+            updateProgress();
+        }
+
+        // ── PROGRESS ──
+        function updateProgress() {
+            var d = document.getElementById('sum-date').textContent;
+            var t = document.getElementById('sum-time').textContent;
+            var c = document.getElementById('sum-course').textContent;
+            var m = document.getElementById('sum-mode').textContent;
+            if (d !== 'Not selected' && t !== 'Not selected') { document.getElementById('dot1').classList.add('done'); document.getElementById('line1').classList.add('done'); document.getElementById('dot2').classList.add('active'); }
+            if (c !== 'Not selected' && m !== 'Not selected') { document.getElementById('dot2').classList.add('done'); document.getElementById('line2').classList.add('done'); document.getElementById('dot3').classList.add('active'); }
+        }
+
+        // ── CONFIRM ──
+        function confirmBooking() {
+            var d = document.getElementById('sum-date').textContent;
+            var t = document.getElementById('sum-time').textContent;
+            var c = document.getElementById('sum-course').textContent;
+            var m = document.getElementById('sum-mode').textContent;
+            var n = document.getElementById('fname').value;
+            var p = document.getElementById('fphone').value;
+            if (d === 'Not selected' || t === 'Not selected') { alert('Please select a date and time slot.'); return; }
+            if (c === 'Not selected') { alert('Please select a course.'); return; }
+            if (m === 'Not selected') { alert('Please choose Offline or Online.'); return; }
+            if (!n.trim() || !p.trim()) { alert('Please fill in your name and phone number.'); return; }
+            document.getElementById('bookingForm').style.display = 'none';
+            document.querySelector('.booking-grid>div:last-child').style.display = 'none';
+            var ss = document.getElementById('successScreen');
+            ss.classList.add('show');
+            document.getElementById('succPhone').textContent = p;
+            document.getElementById('successDetails').innerHTML = '<strong>📅 Date:</strong> ' + d + '<br><strong>⏰ Time:</strong> ' + t + '<br><strong>📚 Course:</strong> ' + c + '<br><strong>💻 Mode:</strong> ' + m + '<br><strong>👤 Name:</strong> ' + n;
+            window.scrollTo({ top: document.getElementById('successScreen').offsetTop - 100, behavior: 'smooth' });
+        }
+
+        var p = document.createElement('div');
+        document.addEventListener('mousemove', function (e) {
+            if (window.innerWidth > 1000) {
+                p.className = 'partical'; p.style.left = e.clientX + 'px'; p.style.top = e.clientY + 'px'; document.body.appendChild(p); setTimeout(function () { p.remove(); }, 1000);
+            }
+        });
+    </script>
+</body>
+
+</html>

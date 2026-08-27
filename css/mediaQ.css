@@ -3,6 +3,8 @@
 @media (max-width: 1024px) {
     .nav-logo img {
         height: 40px;
+        width: 144px;
+        max-width: 144px;
     }
 
     .nav-links a {
